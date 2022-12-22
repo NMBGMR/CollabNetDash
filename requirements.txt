@@ -1,0 +1,6 @@
+dash==2.7.1
+plotly
+pandas
+dash_bootstrap_components
+requests
+flask_caching
