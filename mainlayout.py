@@ -122,8 +122,10 @@ maplayout = go.Layout(
 tablecomp = DataTable(
     id="observationstable",
     style_cell={"textAlign": "left"},
-    columns=[{"name": "Measurement Timestamp", "id": "phenomenonTime"},
-             {"name": "Value", "id": "result"}],
+    columns=[
+        {"name": "Measurement Timestamp", "id": "phenomenonTime"},
+        {"name": "Value", "id": "result"},
+    ],
     style_as_list_view=True,
     # style_header=header_style,
     # style_data=data_style,
@@ -139,10 +141,14 @@ def load_layout(app):
     children = [
         banner_row,
         # subbanner_row,
-        dbc.Row(dbc.Col(
-            children=[dbc.Input(id='point_id_search', value='MG-030'),
-                      dbc.Button("Search", id='point_id_search_btn')]
-        )),
+        dbc.Row(
+            dbc.Col(
+                children=[
+                    dbc.Input(id="point_id_search", value="MG-030"),
+                    dbc.Button("Search", id="point_id_search_btn"),
+                ]
+            )
+        ),
         dbc.Row(
             dbc.Spinner(
                 [html.Div(id="loading-output"), hydrocomp],
@@ -150,20 +156,27 @@ def load_layout(app):
                 color="primary",
             ),
         ),
-        dbc.Row(dbc.Col([dbc.Button(
-                                "Download CSV",
-                                style={"margin": "5px"},
-                                color="secondary",
-                                size="sm",
-                                title="Download all the water levels for the selected location"
-                                " as a single csv file",
-                                id="download_selected_btn",
-                            ),
-                            dcc.Download(id="download_selected_csv"),],width=3)),
         dbc.Row(
-            tablecomp
-        )
+            dbc.Col(
+                [
+                    dbc.Button(
+                        "Download CSV",
+                        style={"margin": "5px"},
+                        color="secondary",
+                        size="sm",
+                        title="Download all the water levels for the selected location"
+                        " as a single csv file",
+                        id="download_selected_btn",
+                    ),
+                    dcc.Download(id="download_selected_csv"),
+                ],
+                width=3,
+            )
+        ),
+        dbc.Row(tablecomp),
     ]
 
     app.layout = dbc.Container(children)
+
+
 # ============= EOF =============================================

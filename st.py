@@ -27,9 +27,9 @@ def get_location(name=None):
         resp = requests.get(url)
         if resp.status_code == 200:
             try:
-                return resp.json()['value'][0]
+                return resp.json()["value"][0]
             except IndexError:
-                print(f'no location found for {name}')
+                print(f"no location found for {name}")
 
 
 def get_observations(location_iotid=None, datastream_id=None, limit=1000, dsname=None):
@@ -66,7 +66,7 @@ def get_observations(location_iotid=None, datastream_id=None, limit=1000, dsname
             pprint.pprint(ds)
             if dsname:
                 for di in ds:
-                    if di['name'] == dsname:
+                    if di["name"] == dsname:
                         datastream_id = di["@iot.id"]
                         break
             else:
@@ -97,5 +97,6 @@ def get_observations(location_iotid=None, datastream_id=None, limit=1000, dsname
                     nextlink = j.get("@iot.nextLink")
 
     return location, obs
+
 
 # ============= EOF =============================================

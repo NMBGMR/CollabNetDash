@@ -60,8 +60,7 @@ def get_loc(*args, **kw):
 
 @dash_app.callback(
     Output("download_selected_csv", "data"),
-    [Input("download_selected_btn", "n_clicks"),
-     State("hydrograph", "figure")],
+    [Input("download_selected_btn", "n_clicks"), State("hydrograph", "figure")],
     prevent_initial_call=True,
 )
 def handle_download_selected(n, fig):
@@ -87,14 +86,15 @@ def make_fig_csv(fig):
 
 
 # make callbacks
-@dash_app.callback([Output('hydrograph', 'figure'),
-                    Output('observationstable', 'data')],
-                   [Input('point_id_search_btn', 'n_clicks'),
-                    State('point_id_search', 'value'),
-                    # State('map', 'figure')
-                    ]
-                   # prevent_initial_call=True
-                   )
+@dash_app.callback(
+    [Output("hydrograph", "figure"), Output("observationstable", "data")],
+    [
+        Input("point_id_search_btn", "n_clicks"),
+        State("point_id_search", "value"),
+        # State('map', 'figure')
+    ]
+    # prevent_initial_call=True
+)
 # def handle_point_id_search(n, v, figmap):
 def handle_point_id_search(n, v):
     loc, totalobs = None, []
@@ -102,10 +102,12 @@ def handle_point_id_search(n, v):
     if n and v:
         loc = get_loc(v)
         if loc:
-            for dsname in ('Groundwater Levels',
-                           'Groundwater Levels(Pressure)',
-                           'Groundwater Levels(Acoustic)'):
-                _, obs = get_obs(loc['@iot.id'], dsname=dsname)
+            for dsname in (
+                "Groundwater Levels",
+                "Groundwater Levels(Pressure)",
+                "Groundwater Levels(Acoustic)",
+            ):
+                _, obs = get_obs(loc["@iot.id"], dsname=dsname)
                 if obs:
                     # print('nasadfme', name, len(obs), len(uxs) if uxs else 0)
                     obs = sorted(obs, key=lambda x: x["phenomenonTime"])
@@ -132,11 +134,8 @@ def handle_point_id_search(n, v):
             # print('fas', figmap)
     # else:
     #     figmap = px.scatter_mapbox(lat=[], lon=[], mapbox_style="open-street-map")
-        # mapdata = [go.Scattermapbox()]
-        # figmap = go.Figure(layout=maplayout, data=mapdata)
-
-
-
+    # mapdata = [go.Scattermapbox()]
+    # figmap = go.Figure(layout=maplayout, data=mapdata)
 
     layout = dict(
         height=350,
